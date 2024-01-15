@@ -17,6 +17,19 @@ function detectTransport(): SendmailTransport.Options | SMTPConnection.Options |
     return transport;
   }
 
+  if (process.env.EMAIL_SERVER === "ethereal") {
+    const transport = {
+      host: process.env.ETHEREAL_SERVER_HOST,
+      port: 587,
+      auth: {
+        user: process.env.ETHEREAL_SERVER_USER,
+        pass: process.env.ETHEREAL_SERVER_PASSWORD,
+      },
+    };
+
+    return transport;
+  }
+
   if (process.env.EMAIL_SERVER) {
     return process.env.EMAIL_SERVER;
   }
